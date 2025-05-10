@@ -22,14 +22,11 @@ export default function Post({ post, refreshProfile }) {
     setIsEditing(true);
   };
 
-
   const handleUpdateClick = async () => {
     const confirmUpdate = window.confirm(
       "Are you sure you want to update this post?"
     );
-    if (confirmUpdate)
-    {
-
+    if (confirmUpdate) {
       try {
         const updatedPost = { ...post, desc: newDesc }; // Prepare updated post
         await axios.put(
@@ -38,16 +35,16 @@ export default function Post({ post, refreshProfile }) {
           { data: { userId: currentUser._id } }
         );
         setSuccessMessage("Post updated successfully");
-        setIsEditing(false); 
+        setIsEditing(false);
         setOriginalDesc(newDesc);
-        refreshProfile(); 
+        refreshProfile();
       } catch (err) {
         console.error("Error updating post:", err);
         setSuccessMessage("Failed to update post");
       }
     }
   };
-  
+
   const handleBlur = () => {
     // Revert to normal mode if no changes are made
     if (newDesc === originalDesc) {
@@ -55,7 +52,6 @@ export default function Post({ post, refreshProfile }) {
     }
   };
 
-  
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
@@ -156,19 +152,8 @@ export default function Post({ post, refreshProfile }) {
             <MoreVert />
           </div>
         </div>
-         {/* <div className="postCenter">
-          {post.userId === currentUser._id ? (
-            <textarea
-              className="postTextInput"
-              value={newDesc}
-              onChange={(e) => setNewDesc(e.target.value)}
-            />
-          ) : (
-            <span className="postText">{post?.desc}</span>
-          )}
-          <img className="postImage" src={PF + post.img} alt="" />
-        </div>  */}
-                <div className="postCenter">
+
+        <div className="postCenter">
           {isEditing ? (
             <textarea
               className="postTextInput"

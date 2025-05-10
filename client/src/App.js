@@ -7,6 +7,7 @@ import Messenger from "./pages/messenger/Messenger";
 import EditProfile from "./pages/editProfile/EditProfile";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
+import ChatBot from "./pages/chatBot/ChatBot";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/messenger" element={!user ? <Navigate to="/" /> :<Messenger />} />
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/editProfile/:username" element={<EditProfile />} />
+        <Route path="/chatBot" element={<ChatBot />} />
       </Routes>
     </Router>
   );

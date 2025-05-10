@@ -31,12 +31,22 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
   const handleClick = async (user) => {
     try {
-      const res = await axios.get(`/conversations/find/${currentId}/${user._id}`);
-      setCurrentChat(res.data);
+      let res = await axios.get(`/conversations/find/${currentId}/${user._id}`);
+      
+      if (!res.data) {
+        // If no conversation exists, create a new one
+        res = await axios.post("/conversations", {
+          senderId: currentId,
+          receiverId: user._id,
+        });
+      }
+  
+      setCurrentChat(res.data); // Set the conversation to the current chat
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching or creating conversation:", err);
     }
   };
+  
 
   return (
     <div className="chatOnline">

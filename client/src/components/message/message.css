@@ -1,90 +1,48 @@
-/* .message{
+.message {
     display: flex;
     flex-direction: column;
     margin-top: 20px;
-}
-
-.messageImage{
+  }
+  
+  .messageTop {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .message.own .messageTop {
+    flex-direction: row-reverse; 
+  }
+  
+  .messageImage {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 10px;
-}
-
-.messageText{
-    padding: 10px;
+  }
+  
+  .messageText {
+    padding: 10px 15px;
     border-radius: 20px;
     background-color: #1877f2;
     color: white;
     max-width: 300px;
-}
-
-.messageBottom{
-    font-size: 12px;
-    margin-top: 10px;
-
-}
-
-.message.own{
-    align-items: flex-end;
-}
-
-.message.own .messageText{
-    background-color:rgb(245, 241, 241);
-    color: black;
-}
- */
-
-
-
-
-
-
- .message {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-}
-
-.messageTop {
-    display: flex;
-    align-items: center; 
-    gap: 10px; 
-}
-
-.messageImage {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.messageText {
-    padding: 10px;
-    border-radius: 20px;
-    background-color: #1877f2;
-    color: white;
-    max-width: 300px;
-    word-wrap: break-word; 
+    word-wrap: break-word;
     text-align: left;
-}
-
-.messageBottom {
-    font-size: 12px;
-    margin-top: 10px;
-    color: gray;
-}
-
-.message.own {
-    align-items: flex-end; 
-}
-
-.message.own .messageTop {
-    justify-content: flex-end; 
-}
-
-.message.own .messageText {
+    font-size: 14px;
+  }
+  
+  .message.own .messageText {
     background-color: rgb(245, 241, 241);
     color: black;
-}
+  }
+  
+  .messageBottom {
+    font-size: 12px;
+    margin-top: 6px;
+    color: gray;
+  }
+  
+  .message.own {
+    align-items: flex-end;
+  }

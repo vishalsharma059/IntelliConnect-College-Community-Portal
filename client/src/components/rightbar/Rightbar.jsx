@@ -48,6 +48,8 @@ export default function Rightbar({ user }) {
     }
   };
 
+
+
   const HomeRightbar = () => {
     return (
       <>
@@ -61,10 +63,10 @@ export default function Rightbar({ user }) {
         <img className="rightbarAd" src="assets/NewPoster.jpg" alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {Users.map((u) => (
-            <Online key={u.id} user={u} />
-          ))}
-        </ul>
+        {Users.map((u) => (
+          <Online key={u.id} user={u} />
+        ))}
+      </ul>
       </>
     );
   };
