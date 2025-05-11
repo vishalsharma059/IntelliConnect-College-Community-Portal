@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
@@ -8,10 +8,17 @@ import EditProfile from "./pages/editProfile/EditProfile";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import ChatBot from "./pages/chatBot/ChatBot";
+import socket from "./socket"; // <-- import the socket instance
 
 function App() {
 
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
+  
+  useEffect(() => {
+    if (user) {
+      socket.emit("addUser", user._id);
+    }
+  }, [user]);
   return (
     <Router>
       <Routes>
