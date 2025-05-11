@@ -1,10 +1,22 @@
 import "./sidebar.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { RssFeed, Chat, PlayCircle, Group, Bookmark, HelpOutline, WorkOutline, Event, School } from "@mui/icons-material";
+import {
+  RssFeed,
+  Chat,
+  PlayCircle,
+  Group,
+  Bookmark,
+  HelpOutline,
+  WorkOutline,
+  Event,
+  School,
+  SmartToy
+} from "@mui/icons-material";
 import CloseFriend from "../closeFriend/CloseFriend";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   const [friends, setFriends] = useState([]);
@@ -13,7 +25,9 @@ export default function Sidebar() {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/api/users/friends/${user._id}`);
+        const res = await axios.get(
+          `http://localhost:8800/api/users/friends/${user._id}`
+        );
         setFriends(res.data);
       } catch (err) {
         console.log("Error fetching friends:", err);
@@ -26,40 +40,50 @@ export default function Sidebar() {
     <div className="sidebar">
       <div className="sidebarWrapper">
         <ul className="sidebarList">
+          <Link to={`/profile/${user.username}`} className="sidebarLink">
+            <li className="sidebarListItem">
+              <Group className="sidebarIcon" />
+              <span className="sidebarListItemText">Friends</span>
+            </li>
+          </Link>
+          <Link to= "/messenger" className="sidebarLink">
+            <li className="sidebarListItem">
+              <Chat className="sidebarIcon" />
+              <span className="sidebarListItemText">Chats</span>
+            </li>
+          </Link>
+          <Link to= "/ChatBot" className="sidebarLink">
+            <li className="sidebarListItem">
+              <SmartToy className="sidebarIcon" />
+              <span className="sidebarListItemText">ChatBot</span>
+            </li>
+          </Link>
           <li className="sidebarListItem">
-            <RssFeed className="sidebarIcon"/>
-            <span className="sidebarListItemText">Feed</span>
-          </li>
-          <li className="sidebarListItem">
-            <Chat className="sidebarIcon"/>
-            <span className="sidebarListItemText">Chats</span>
-          </li>   
-          <li className="sidebarListItem">
-            <PlayCircle className="sidebarIcon"/>
+            <PlayCircle className="sidebarIcon" />
             <span className="sidebarListItemText">Videos</span>
           </li>
           <li className="sidebarListItem">
-            <Group className="sidebarIcon"/>
-            <span className="sidebarListItemText">Groups</span>
+            <RssFeed className="sidebarIcon" />
+            <span className="sidebarListItemText">Feed</span>
           </li>
           <li className="sidebarListItem">
-            <Bookmark className="sidebarIcon"/>
+            <Bookmark className="sidebarIcon" />
             <span className="sidebarListItemText">Bookmarks</span>
           </li>
           <li className="sidebarListItem">
-            <HelpOutline className="sidebarIcon"/>
+            <HelpOutline className="sidebarIcon" />
             <span className="sidebarListItemText">Questions</span>
           </li>
           <li className="sidebarListItem">
-            <WorkOutline className="sidebarIcon"/>
+            <WorkOutline className="sidebarIcon" />
             <span className="sidebarListItemText">Jobs</span>
           </li>
           <li className="sidebarListItem">
-            <Event className="sidebarIcon"/>
+            <Event className="sidebarIcon" />
             <span className="sidebarListItemText">Events</span>
           </li>
           <li className="sidebarListItem">
-            <School className="sidebarIcon"/>
+            <School className="sidebarIcon" />
             <span className="sidebarListItemText">Courses</span>
           </li>
         </ul>
