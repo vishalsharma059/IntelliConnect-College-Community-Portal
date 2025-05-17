@@ -28,7 +28,7 @@ export default function Share() {
       data.append("file", file);
       try {
         const uploadRes = await axios.post(
-          "http://localhost:8800/api/upload",
+          `${process.env.REACT_APP_API_URL}/api/upload`,
           data
         );
         newPost.img = uploadRes.data.url; // <-- S3 URL
@@ -37,7 +37,7 @@ export default function Share() {
       }
     }
     try {
-      await axios.post("http://localhost:8800/api/posts", newPost);
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/posts`, newPost);
       window.location.reload();
     } catch (err) {
       console.log(err);
