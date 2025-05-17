@@ -1,0 +1,44 @@
+# =========================
+# Global ignores
+# =========================
+
+# Ignore node modules
+node_modules/
+**/node_modules/
+
+# Ignore environment variable files
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Ignore production build directories
+build/
+**/build/
+
+# Ignore log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore coverage/test output
+coverage/
+**/coverage/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore pnpm/Yarn Plug'n'Play files
+.pnp/
+.pnp.js
+
+# Ignore IDE/workspace settings
+.vscode/
+.idea/
+
+# Optional: Ignore compiled or temp files
+dist/
+**/dist/
+*.log
+*.tmp

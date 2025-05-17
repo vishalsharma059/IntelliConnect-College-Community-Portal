@@ -1,0 +1,47 @@
+.editProfile {
+    display: flex;
+  }
+  
+  .editProfileWrapper {
+    flex: 9;
+    padding: 20px;
+  }
+  
+  .editProfileWrapper h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .editProfileForm {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .editProfileForm label {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  
+  .editProfileForm input,
+  .editProfileForm textarea {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .editProfileForm button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .editProfileForm button:hover {
+    background-color: #165dc7;
+  }
