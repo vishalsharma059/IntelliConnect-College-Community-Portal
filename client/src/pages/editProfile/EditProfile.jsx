@@ -6,13 +6,11 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
-
 export default function EditProfile() {
   const { user, dispatch } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const username = useParams().username;
   const navigate = useNavigate();
-
 
   // const [user, setUser] = useState({});
   const [formData, setFormData] = useState({
@@ -56,11 +54,13 @@ export default function EditProfile() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // ...existing code...
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const updatedData = {
-      userId: user._id,
+      userId: String(user._id), // Ensure it's a string
       desc: formData.desc,
       college: formData.college,
       role: formData.role,
@@ -71,14 +71,13 @@ export default function EditProfile() {
     // Handle Profile Picture Upload
     if (profilePictureFile) {
       const profileData = new FormData();
-      const fileName = Date.now() + profilePictureFile.name;
-      profileData.append("name", fileName);
       profileData.append("file", profilePictureFile);
-      updatedData.profilePicture = fileName;
-
       try {
-        await axios.post("http://localhost:8800/api/upload", profileData);
-        dispatch({ type: "UPDATE_USER", payload: { ...user, profilePicture: fileName } });
+        const uploadRes = await axios.post(
+          "http://localhost:8800/api/upload",
+          profileData
+        );
+        updatedData.profilePicture = uploadRes.data.url; // Use S3 URL
       } catch (err) {
         console.error("Error uploading profile picture:", err);
       }
@@ -87,13 +86,13 @@ export default function EditProfile() {
     // Handle Cover Picture Upload
     if (coverPictureFile) {
       const coverData = new FormData();
-      const fileName = Date.now() + coverPictureFile.name;
-      coverData.append("name", fileName);
       coverData.append("file", coverPictureFile);
-      updatedData.coverPicture = fileName;
-
       try {
-        await axios.post("http://localhost:8800/api/upload", coverData);
+        const uploadRes = await axios.post(
+          "http://localhost:8800/api/upload",
+          coverData
+        );
+        updatedData.coverPicture = uploadRes.data.url; // Use S3 URL
       } catch (err) {
         console.error("Error uploading cover picture:", err);
       }
@@ -101,10 +100,13 @@ export default function EditProfile() {
 
     // Update User Data
     try {
-      await axios.put(
+      const res = await axios.put(
         `http://localhost:8800/api/users/${user._id}`,
         updatedData
       );
+      // Update context and localStorage with the new user data
+      dispatch({ type: "UPDATE_USER", payload: res.data });
+      localStorage.setItem("user", JSON.stringify(res.data));
       alert("Profile updated successfully!");
       navigate(`/profile/${username}`);
     } catch (err) {
@@ -113,6 +115,7 @@ export default function EditProfile() {
     }
   };
 
+  // ...existing code...
   return (
     <>
       <Topbar />

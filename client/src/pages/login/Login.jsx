@@ -1,5 +1,5 @@
 import "./login.css"
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@mui/material";
@@ -10,22 +10,25 @@ export default function Login() {
   const password = useRef();
   const { user, isFetching, error, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [loadingButton, setLoadingButton] = useState(""); // "login" or "register"
 
   const handleClick = (e) => {
-
     e.preventDefault();
-    loginCall({ email:email.current.value, password:password.current.value }, dispatch);
+    setLoadingButton("login");
+    loginCall(
+      { email: email.current.value, password: password.current.value },
+      dispatch
+    );
   };
 
   const handleRegisterRedirect = () => {
-    navigate("/register"); // Navigate to register page
+    setLoadingButton("register");
+    navigate("/register");
   };
 
-  // console.log(user);
-  
   return (
-      <div className="login">
-          <div className="loginWrapper">
+    <div className="login">
+      <div className="loginWrapper">
         <div className="loginLeft">
           <h3 className="loginLogo">IntelliConnect</h3>
           <span className="loginDesc">
@@ -37,21 +40,37 @@ export default function Login() {
             <input placeholder="Email" required type="email" className="loginInput" ref={email}/>
             <input placeholder="Password" required minLength="6" type="password" className="loginInput" ref={password} />
             
-            <button className="loginButton" type="submit" disabled={isFetching}>{isFetching ? <CircularProgress color="white" size="20px" /> : "Log In"}</button>
+            <button
+              className="loginButton"
+              type="submit"
+              disabled={isFetching && loadingButton === "login"}
+            >
+              {isFetching && loadingButton === "login" ? (
+                <CircularProgress color="white" size="20px" />
+              ) : (
+                "Log In"
+              )}
+            </button>
 
             {error && <span className="errorMessage">{error}</span>}
             
             <span className="loginForgot">Forgot Password?</span>
 
-            <button className="loginRegisterButton" type="button"
-              onClick={handleRegisterRedirect}>
-            {isFetching ? <CircularProgress color="white" size="20px"/> : "Create a New Account"}
-              
+            <button
+              className="loginRegisterButton"
+              type="button"
+              onClick={handleRegisterRedirect}
+              disabled={isFetching && loadingButton === "register"}
+            >
+              {isFetching && loadingButton === "register" ? (
+                <CircularProgress color="white" size="20px" />
+              ) : (
+                "Create a New Account"
+              )}
             </button>
          </form>
         </div>
       </div>
-      
     </div>
-  )
+  );
 }

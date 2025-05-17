@@ -119,10 +119,12 @@ export default function Rightbar({ user, onlineUsers = [] }) {
               <div className="rightbarFollowing">
                 <img
                   src={
-                    friend.profilePicture
-                      ? PF + friend.profilePicture
-                      : PF + "person/noAvatar.png"
-                  }
+    friend.profilePicture
+      ? friend.profilePicture.startsWith("http")
+        ? friend.profilePicture
+        : PF + friend.profilePicture
+      : PF + "person/noAvatar.png"
+  }
                   className="rightbarFollowingImage"
                   alt=""
                 />

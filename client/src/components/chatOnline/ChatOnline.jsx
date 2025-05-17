@@ -54,10 +54,16 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
         <div className="chatOnlineFriend" onClick={() => handleClick(o)} key={o._id}>
           <div className="chatOnlineImageContainer">
             <img
-              className="chatOnlineImage"
-              src={o?.profilePicture ? PF + o?.profilePicture : PF + "person/noAvatar.png"}
-              alt=""
-            />
+  className="chatOnlineImage"
+  src={
+    o?.profilePicture
+      ? o.profilePicture.startsWith("http")
+        ? o.profilePicture
+        : PF + o.profilePicture
+      : PF + "person/noAvatar.png"
+  }
+  alt=""
+/>
             <div className="chatOnlineBadge"></div>
           </div>
           <span className="chatOnlineName">{o.username}</span>

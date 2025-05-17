@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react"
-import "./conversation.css"
+import { useEffect, useState } from "react";
+import "./conversation.css";
 import axios from "axios";
 
 export default function Conversation({ conversation, currentUser }) {
   const [user, setUser] = useState(null);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER
-  
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
   useEffect(() => {
     if (!conversation || !conversation.members) {
       console.error("Invalid conversation object:", conversation);
@@ -19,9 +19,9 @@ export default function Conversation({ conversation, currentUser }) {
         const res = await axios.get("/users?userId=" + friendId);
         setUser(res.data);
       } catch (err) {
-        console.log(err); 
-      } 
-    }
+        console.log(err);
+      }
+    };
     getUser();
   }, [currentUser, conversation]);
 
@@ -31,18 +31,22 @@ export default function Conversation({ conversation, currentUser }) {
         <span>Loading...</span>
       ) : (
         <>
-            <img
-    className="conversationImage"
-    src={
-      user?.profilePicture
-        ? PF + user.profilePicture
-        : PF + "person/noAvatar.png"
-    }
-    alt="Profile"
-  />
-          <span className="conversationName">{user?.username || "Unknown User"}</span>
+          <img
+            className="conversationImage"
+            src={
+              user.profilePicture
+                ? user.profilePicture.startsWith("http")
+                  ? user.profilePicture
+                  : PF + user.profilePicture
+                : PF + "person/noAvatar.png"
+            }
+            alt="Profile"
+          />
+          <span className="conversationName">
+            {user?.username || "Unknown User"}
+          </span>
         </>
       )}
     </div>
-  )
+  );
 }

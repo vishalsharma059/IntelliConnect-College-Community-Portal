@@ -129,7 +129,9 @@ export default function Post({ post, refreshProfile }) {
                 className="postProfileImage"
                 src={
                   user.profilePicture
-                    ? PF + user.profilePicture
+                    ? user.profilePicture.startsWith("http")
+                      ? user.profilePicture
+                      : PF + user.profilePicture
                     : PF + "person/noAvatar.png"
                 }
                 alt=""
@@ -167,7 +169,14 @@ export default function Post({ post, refreshProfile }) {
               {post?.desc}
             </span>
           )}
-          {post.img && <img className="postImage" src={PF + post.img} alt="" />}
+          {/* {post.img && <img className="postImage" src={PF + post.img} alt="" />} */}
+          {post.img && (
+            <img
+              className="postImage"
+              src={post.img.startsWith("http") ? post.img : PF + post.img}
+              alt=""
+            />
+          )}
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
