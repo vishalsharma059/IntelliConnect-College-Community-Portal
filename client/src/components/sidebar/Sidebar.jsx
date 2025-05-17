@@ -26,7 +26,7 @@ export default function Sidebar() {
     const fetchFriends = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/users/friends/${user._id}`
+          `${process.env.REACT_APP_API_URL}/api/users/friends/${user._id}`
         );
         setFriends(res.data);
       } catch (err) {
