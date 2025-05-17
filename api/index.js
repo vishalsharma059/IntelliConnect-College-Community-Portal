@@ -19,12 +19,21 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 const { uploadFile } = require("./utils/s3");
 
+const cors = require('cors');
+
+app.use(cors({
+  origin: 'https://intelli-connect-college-community-portal.vercel.app', // no trailing slash here
+  credentials: true,
+}));
+
 // --- Socket.IO setup ---
 const { Server } = require("socket.io");
-const io = new Server(server, {
+
+const io = require('socket.io')(server, {
   cors: {
-    origin: "https://intelli-connect-college-community-portal.vercel.app/", // <-- update with your Vercel URL
-    methods: ["GET", "POST"]
+    origin: 'https://intelli-connect-college-community-portal.vercel.app', // exact origin, no trailing slash
+    methods: ['GET', 'POST'],
+    credentials: true,
   }
 });
 
