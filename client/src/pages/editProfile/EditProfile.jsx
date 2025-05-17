@@ -30,7 +30,7 @@ export default function EditProfile() {
     const fetchUser = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/users?username=${username}`
+          `${process.env.REACT_APP_API_URL}/api/users?username=${username}`
         );
         // setUser(res.data);
         setFormData({
@@ -74,7 +74,7 @@ export default function EditProfile() {
       profileData.append("file", profilePictureFile);
       try {
         const uploadRes = await axios.post(
-          "http://localhost:8800/api/upload",
+          `${process.env.REACT_APP_API_URL}/api/upload`,
           profileData
         );
         updatedData.profilePicture = uploadRes.data.url; // Use S3 URL
@@ -89,7 +89,7 @@ export default function EditProfile() {
       coverData.append("file", coverPictureFile);
       try {
         const uploadRes = await axios.post(
-          "http://localhost:8800/api/upload",
+          `${process.env.REACT_APP_API_URL}/api/upload`,
           coverData
         );
         updatedData.coverPicture = uploadRes.data.url; // Use S3 URL
@@ -101,7 +101,7 @@ export default function EditProfile() {
     // Update User Data
     try {
       const res = await axios.put(
-        `http://localhost:8800/api/users/${user._id}`,
+        `${process.env.REACT_APP_API_URL}/api/users/${user._id}`,
         updatedData
       );
       // Update context and localStorage with the new user data
