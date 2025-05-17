@@ -23,7 +23,7 @@ const { uploadFile } = require("./utils/s3");
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000", // <-- update with your Vercel URL
+    origin: "https://intelli-connect-college-community-portal.vercel.app/", // <-- update with your Vercel URL
     methods: ["GET", "POST"]
   }
 });
@@ -87,7 +87,7 @@ app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 //middleware
 
-app.use(cors({ origin: 'http://localhost:3000' })); // <-- update with your Vercel URL
+app.use(cors({ origin: 'https://intelli-connect-college-community-portal.vercel.app/' })); // <-- update with your Vercel URL
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
