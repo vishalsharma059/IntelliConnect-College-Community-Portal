@@ -22,7 +22,7 @@ export default function Messenger() {
 
   // Establish the socket connection
   useEffect(() => {
-    socket.current = io("ws://localhost:8800");
+    socket.current = io(process.env.REACT_APP_SOCKET_URL);
 
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
