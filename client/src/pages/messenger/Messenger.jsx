@@ -333,17 +333,13 @@ export default function Messenger() {
           <div className="chatBoxWrapper">
             {currentChat ? (
               <>
-                <div className="chatBoxTop">
-                  {Array.isArray(messages) ? (
-                    messages.map((m, index) => (
-                      <div ref={scrollRef} key={index}>
-                        <Message message={m} own={m.sender === user._id} />
-                      </div>
-                    ))
-                  ) : (
-                    <span>No messages available.</span>
-                  )}
-                </div>
+<div className="chatBoxTop">
+  {(Array.isArray(messages) ? messages : []).map((m, index) => (
+    <div ref={scrollRef} key={index}>
+      <Message message={m} own={m.sender === user._id} />
+    </div>
+  ))}
+</div>
 
                 <div className="chatBoxBottom">
                   <textarea
