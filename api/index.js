@@ -130,41 +130,88 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const path = require("path");
+const cors = require("cors");
+const multer = require("multer");
+const { uploadFile } = require("./utils/s3");
+
+// Load environment variables
+dotenv.config();
+
+// Middleware Setup
+app.use(express.json());
+app.use(helmet());
+app.use(morgan("common"));
+
+// CORS setup
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://intelli-connect-college-community-portal.vercel.app',
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
+
+// MongoDB Connection
+async function connectDB() {
+  try {
+    if (!process.env.MONGO_URL) throw new Error("MONGO_URL not defined in .env");
+    await mongoose.connect(process.env.MONGO_URL);
+    console.log('✅ Connected to MongoDB');
+  } catch (error) {
+    console.error('❌ MongoDB connection error:', error);
+    process.exit(1);
+  }
+}
+connectDB();
+
+// Routes
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
 const conversationRoute = require("./routes/conversations");
 const messageRoute = require("./routes/messages");
-const path = require("path");
-const cors = require("cors");
-const multer = require("multer");
+
+app.use("/api/users", userRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/posts", postRoute);
+app.use("/api/conversations", conversationRoute);
+app.use("/api/messages", messageRoute);
+
+// Serve static images
+app.use("/images", (req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", allowedOrigins[1]);
+  next();
+}, express.static(path.join(__dirname, "public/images")));
+
+// Upload setup using multer memory storage
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
-const { uploadFile } = require("./utils/s3");
 
-dotenv.config();
+app.post("/api/upload", upload.single("file"), async (req, res) => {
+  try {
+    const result = await uploadFile(req.file);
+    return res.status(200).json({ url: result.Location });
+  } catch (err) {
+    console.error("Upload error:", err);
+    res.status(500).json("File upload failed");
+  }
+});
 
-// CORS middleware — only once, no trailing slash in origin
-const allowedOrigins = [
-  'http://localhost:3000', // local frontend
-  'https://intelli-connect-college-community-portal.vercel.app', // Vercel frontend
-];
+// Root Route
+app.get('/', (req, res) => {
+  res.send('🚀 Server is running...');
+});
 
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true, // only if you're using cookies/auth headers
-}));
-app.use(express.json());
-app.use(helmet());
-app.use(morgan("common"));
-
-// --- Socket.IO setup ---
+// Socket.IO setup
 const { Server } = require("socket.io");
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://intelli-connect-college-community-portal.vercel.app',
-    methods: ['GET', 'POST'],
+    origin: allowedOrigins,
+    methods: ["GET", "POST"],
     credentials: true,
   }
 });
@@ -172,24 +219,25 @@ const io = new Server(server, {
 let users = [];
 
 const addUser = (userId, socketId) => {
-  if (!users.some((user) => user.userId === userId)) {
+  if (!users.some(user => user.userId === userId)) {
     users.push({ userId, socketId });
   }
 };
 
 const removeUser = (socketId) => {
-  users = users.filter((user) => user.socketId !== socketId);
+  users = users.filter(user => user.socketId !== socketId);
 };
 
 const getUser = (userId) => {
-  return users.find((user) => user.userId === userId);
+  return users.find(user => user.userId === userId);
 };
 
 io.on("connection", (socket) => {
-  console.log("A user connected.");
+  console.log("🟢 A user connected:", socket.id);
 
   socket.on("addUser", (userId) => {
     addUser(userId, socket.id);
+    console.log("👤 User added:", userId);
     io.emit("getUsers", users);
   });
 
@@ -204,50 +252,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
+    console.log("🔴 A user disconnected:", socket.id);
     removeUser(socket.id);
     io.emit("getUsers", users);
   });
 });
-// --- End Socket.IO setup ---
 
-async function connectDB() {
-  try {
-    await mongoose.connect(process.env.MONGO_URL);
-    console.log('Connected to MongoDB');
-  } catch (error) {
-    console.error('Failed to connect to MongoDB', error);
-    process.exit(1);
-  }
-}
-
-connectDB();
-
-// Serve images with CORS headers
-app.use("/images", (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://intelli-connect-college-community-portal.vercel.app");
-  next();
-}, express.static(path.join(__dirname, "public/images")));
-
-app.post("/api/upload", upload.single("file"), async (req, res) => {
-  try {
-    const result = await uploadFile(req.file);
-    return res.status(200).json({ url: result.Location });
-  } catch (err) {
-    res.status(500).json("File upload failed");
-  }
-});
-
-app.get('/', (req, res) => {
-  res.send('Server is running...');
-});
-
-app.use("/api/users", userRoute);
-app.use("/api/auth", authRoute);
-app.use("/api/posts", postRoute);
-app.use("/api/conversations", conversationRoute);
-app.use("/api/messages", messageRoute);
-
+// Start Server
 const PORT = process.env.PORT || 8800;
 server.listen(PORT, () => {
-  console.log(`Backend server is running on port ${PORT}!`);
+  console.log(`🔥 Backend server is running on port ${PORT}`);
 });
