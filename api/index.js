@@ -145,17 +145,22 @@ const { uploadFile } = require("./utils/s3");
 dotenv.config();
 
 // CORS middleware — only once, no trailing slash in origin
-app.use(cors({
-  origin: 'https://intelli-connect-college-community-portal.vercel.app',
-  credentials: true,
-}));
+const allowedOrigins = [
+  'http://localhost:3000', // local frontend
+  'https://intelli-connect-college-community-portal.vercel.app', // Vercel frontend
+];
 
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true, // only if you're using cookies/auth headers
+}));
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
 
 // --- Socket.IO setup ---
 const { Server } = require("socket.io");
+
 const io = new Server(server, {
   cors: {
     origin: 'https://intelli-connect-college-community-portal.vercel.app',
