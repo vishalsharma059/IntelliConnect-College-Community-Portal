@@ -228,6 +228,10 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.send('Server is running...');
+});
+
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
