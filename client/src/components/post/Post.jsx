@@ -30,7 +30,7 @@ export default function Post({ post, refreshProfile }) {
       try {
         const updatedPost = { ...post, desc: newDesc }; // Prepare updated post
         await axios.put(
-          `http://localhost:8800/api/posts/${post._id}`,
+          `${process.env.REACT_APP_API_URL}/api/posts/${post._id}`,
           updatedPost,
           { data: { userId: currentUser._id } }
         );
@@ -60,7 +60,7 @@ export default function Post({ post, refreshProfile }) {
     const fetchUser = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/users?userId=${post.userId}`
+          `${process.env.REACT_APP_API_URL}/api/users?userId=${post.userId}`
         );
         setUser(res.data);
       } catch (error) {
@@ -72,7 +72,7 @@ export default function Post({ post, refreshProfile }) {
 
   const likeHandler = () => {
     try {
-      axios.put("http://localhost:8800/api/posts/" + post._id + "/like", {
+      axios.put(`${process.env.REACT_APP_API_URL}/api/posts/` + post._id + "/like", {
         userId: currentUser._id,
       });
     } catch (err) {}
@@ -86,7 +86,7 @@ export default function Post({ post, refreshProfile }) {
     );
     if (confirmDelete) {
       try {
-        await axios.delete(`http://localhost:8800/api/posts/${post._id}`, {
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/posts/${post._id}`, {
           data: { userId: currentUser._id },
         });
         setSuccessMessage("Post deleted successfully");
@@ -106,7 +106,7 @@ export default function Post({ post, refreshProfile }) {
       try {
         const updatedPost = { ...post, desc: newDesc }; // Example updated post data
         await axios.put(
-          `http://localhost:8800/api/posts/${post._id}`,
+          `${process.env.REACT_APP_API_URL}/api/posts/${post._id}`,
           updatedPost,
           { data: { userId: currentUser._id } }
         );
