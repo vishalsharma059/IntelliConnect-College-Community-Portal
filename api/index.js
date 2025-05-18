@@ -222,7 +222,11 @@ async function connectDB() {
 
 connectDB();
 
-app.use("/images", express.static(path.join(__dirname, "public/images")));
+// Serve images with CORS headers
+app.use("/images", (req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://intelli-connect-college-community-portal.vercel.app");
+  next();
+}, express.static(path.join(__dirname, "public/images")));
 
 app.post("/api/upload", upload.single("file"), async (req, res) => {
   try {
