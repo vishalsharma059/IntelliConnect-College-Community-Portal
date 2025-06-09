@@ -214,7 +214,7 @@ export default function Topbar() {
   const handleSearch = async (query) => {
     try {
       const res = await axios.get(
-        `http://localhost:8800/api/users/search?query=${query}`
+        `${process.env.REACT_APP_API_URL}/api/users/search?query=${query}`
       );
       setSearchResults(res.data);
       setShowDropdown(true);
