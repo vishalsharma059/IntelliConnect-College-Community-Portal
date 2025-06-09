@@ -206,19 +206,19 @@ app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
 
 // Serve static images with dynamic CORS
-// app.use(
-//   "/images",
-//   (req, res, next) => {
-//     const origin = req.headers.origin;
-//     if (allowedOrigins.includes(origin)) {
-//       res.setHeader("Access-Control-Allow-Origin", origin);
-//     }
-//     next();
-//   },
-//   express.static(path.join(__dirname, "public/images"))
-// );
 
-app.use("/images", cors({
+// app.use("/images", cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   credentials: true,
+// }), express.static(path.join(__dirname, "public/images")));
+
+const imageCorsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -227,7 +227,11 @@ app.use("/images", cors({
     }
   },
   credentials: true,
-}), express.static(path.join(__dirname, "public/images")));
+};
+
+// Apply CORS to static image responses
+app.use("/images", cors(imageCorsOptions), express.static(path.join(__dirname, "public/images")));
+
 
 
 // Multer upload to S3
