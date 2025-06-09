@@ -206,17 +206,29 @@ app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
 
 // Serve static images with dynamic CORS
-app.use(
-  "/images",
-  (req, res, next) => {
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-      res.setHeader("Access-Control-Allow-Origin", origin);
+// app.use(
+//   "/images",
+//   (req, res, next) => {
+//     const origin = req.headers.origin;
+//     if (allowedOrigins.includes(origin)) {
+//       res.setHeader("Access-Control-Allow-Origin", origin);
+//     }
+//     next();
+//   },
+//   express.static(path.join(__dirname, "public/images"))
+// );
+
+app.use("/images", cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
     }
-    next();
   },
-  express.static(path.join(__dirname, "public/images"))
-);
+  credentials: true,
+}), express.static(path.join(__dirname, "public/images")));
+
 
 // Multer upload to S3
 const storage = multer.memoryStorage();
