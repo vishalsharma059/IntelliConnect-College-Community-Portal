@@ -32,7 +32,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
   const handleClick = async (user) => {
     try {
       let res = await axios.get(`/conversations/find/${currentId}/${user._id}`);
-      
+
       if (!res.data) {
         // If no conversation exists, create a new one
         res = await axios.post("/conversations", {
@@ -40,30 +40,33 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
           receiverId: user._id,
         });
       }
-  
+
       setCurrentChat(res.data); // Set the conversation to the current chat
     } catch (err) {
       console.error("Error fetching or creating conversation:", err);
     }
   };
-  
 
   return (
     <div className="chatOnline">
       {onlinefriends.map((o) => (
-        <div className="chatOnlineFriend" onClick={() => handleClick(o)} key={o._id}>
+        <div
+          className="chatOnlineFriend"
+          onClick={() => handleClick(o)}
+          key={o._id}
+        >
           <div className="chatOnlineImageContainer">
             <img
-  className="chatOnlineImage"
-  src={
-    o?.profilePicture
-      ? o.profilePicture.startsWith("http")
-        ? o.profilePicture
-        : PF + o.profilePicture
-      : PF + "person/noAvatar.png"
-  }
-  alt=""
-/>
+              className="chatOnlineImage"
+              src={
+                o?.profilePicture
+                  ? o.profilePicture.startsWith("http")
+                    ? o.profilePicture
+                    : PF + o.profilePicture
+                  : PF + "person/noAvatar.png"
+              }
+              alt=""
+            />
             <div className="chatOnlineBadge"></div>
           </div>
           <span className="chatOnlineName">{o.username}</span>
