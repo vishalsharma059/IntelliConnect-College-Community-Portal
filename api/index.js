@@ -175,7 +175,7 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: false,
+    credentials: true,
   })
 );
 
@@ -226,7 +226,7 @@ const imageCorsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true,
+  credentials: false,
 };
 
 // Apply CORS to static image responses
