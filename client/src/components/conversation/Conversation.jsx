@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "./conversation.css";
 import axios from "axios";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8800";
+
 export default function Conversation({ conversation, currentUser }) {
   const [user, setUser] = useState(null);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -16,7 +18,7 @@ export default function Conversation({ conversation, currentUser }) {
 
     const getUser = async () => {
       try {
-        const res = await axios.get("/users?userId=" + friendId);
+        const res = await axios.get(`${API_URL}/api/users?userId=${friendId}`);
         setUser(res.data);
       } catch (err) {
         console.log(err);
