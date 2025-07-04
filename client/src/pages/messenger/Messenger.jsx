@@ -447,7 +447,7 @@ export default function Messenger() {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await axios.get(`${API_URL}/conversations/${user._id}`);
+        const res = await axios.get(`${API_URL}/api/conversations/${user._id}`);
         setConversations(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("Error fetching conversations:", err);
@@ -460,7 +460,7 @@ export default function Messenger() {
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get(`${API_URL}/messages/${currentChat?._id}`);
+        const res = await axios.get(`${API_URL}/api/messages/${currentChat?._id}`);
         setMessages(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("Error fetching messages:", err);
@@ -494,7 +494,7 @@ export default function Messenger() {
     });
 
     try {
-      const res = await axios.post(`${API_URL}/messages`, message);
+      const res = await axios.post(`${API_URL}/api/messages`, message);
       setMessages((prev) => [...prev, res.data]);
       setNewMessage("");
     } catch (err) {
