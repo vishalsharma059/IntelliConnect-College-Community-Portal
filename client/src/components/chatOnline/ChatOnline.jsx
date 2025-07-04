@@ -77,6 +77,8 @@ import { useEffect, useState } from "react";
 import "./chatOnline.css";
 import axios from "axios";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8800/api";
+
 export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
   const [friends, setFriends] = useState([]);
   const [onlinefriends, setOnlineFriends] = useState([]);
@@ -90,7 +92,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
     const getFriends = async () => {
       try {
-        const res = await axios.get("/users/friends/" + currentId);
+        const res = await axios.get(`${API_URL}/users/friends/${currentId}`);
         setFriends(res.data);
       } catch (err) {
         console.error("Error fetching friends:", err.message);
@@ -113,11 +115,11 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
   const handleClick = async (user) => {
     try {
-      let res = await axios.get(`/conversations/find/${currentId}/${user._id}`);
+      let res = await axios.get(`${API_URL}/conversations/find/${currentId}/${user._id}`);
 
       if (!res.data) {
         // If no conversation exists, create a new one
-        res = await axios.post("/conversations", {
+        res = await axios.post(`${API_URL}/conversations`, {
           senderId: currentId,
           receiverId: user._id,
         });

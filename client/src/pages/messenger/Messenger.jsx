@@ -384,6 +384,8 @@ import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { io } from "socket.io-client";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8800/api";
+
 export default function Messenger() {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
@@ -445,7 +447,7 @@ export default function Messenger() {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await axios.get("/conversations/" + user._id);
+        const res = await axios.get(`${API_URL}/conversations/${user._id}`);
         setConversations(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("Error fetching conversations:", err);
@@ -458,7 +460,7 @@ export default function Messenger() {
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get("/messages/" + currentChat?._id);
+        const res = await axios.get(`${API_URL}/messages/${currentChat?._id}`);
         setMessages(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("Error fetching messages:", err);
@@ -492,7 +494,7 @@ export default function Messenger() {
     });
 
     try {
-      const res = await axios.post("/messages", message);
+      const res = await axios.post(`${API_URL}/messages`, message);
       setMessages((prev) => [...prev, res.data]);
       setNewMessage("");
     } catch (err) {
