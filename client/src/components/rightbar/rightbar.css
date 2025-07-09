@@ -1,4 +1,4 @@
-.rigthbar{
+.rightbar{
     flex: 3.5;
 }
 
@@ -9,6 +9,7 @@
 .birthdayContainer{
     display: flex;
     align-items: center;
+    /* margin-bottom: 20px; */
 }
 
 .birthdayImage{
@@ -27,6 +28,7 @@
     width: 100%;
     border-radius: 10px;
     margin: 30px 0;
+    object-fit: cover;
 }
 
 .rightbarTitle{
@@ -41,12 +43,12 @@
 
 .rightbarTitle{
     font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 10px;
+    font-weight: 600;
+    margin: 20px 0 10px;
 }
 
 .rightbarInfo{
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .rightbarInfoItem{
@@ -61,41 +63,105 @@
 
 .rightbarValue{
     font-weight: 300;
+    color: #666;
 
 }
 
- .rightbarFollowings{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+.rightbarFollowings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 15px;
+}
 
-} 
-
-.rightbarFollowing{
+/* .rightbarFollowing{
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    gap: 6px;
     cursor: pointer;
+} */
+
+.rightbarFollowing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  gap: 6px;
 }
 
-.rightbarFollowingImage{
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
+.rightbarFollowingImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #eee;
+  transition: transform 0.3s ease;
 }
 
-.rightbarFollowButton{
-    margin-top: 30px;
-    margin-bottom: 10px;
-    border:none;
-    background-color: #1872f2;
-    color: white;
-    border-radius: 5px;
-    padding: 5px 10px;
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
+.rightbarFollowingImage:hover {
+  transform: scale(1.05);
+}
+
+.rightbarFollowingName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.rightbarFollowButton {
+  margin: 15px 0;
+  border: none;
+  background-color: #1872f2;
+  color: white;
+  border-radius: 5px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 500;
+  gap: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+ 
+.rightbarFollowButton:hover {
+  background-color: #155ac3;
+}
+
+/* .homeRightbar {
+  display: none;
+} */
+
+@media screen and (max: 768px)  {
+  .homeRightbar {
+    display: block;
+  }
+
+    .rightbar {
+    flex: 1;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .rightbarWrapper {
+    padding: 10px 0;
+  }
+
+  .rightbarFollowings {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rightbarFollowingImage {
+    width: 70px;
+    height: 70px;
+  }
+
+  .rightbarFollowingName {
+    font-size: 13px;
+  }
+
+  .rightbarFollowButton {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
 }

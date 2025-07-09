@@ -1,4 +1,4 @@
-.profile{
+ .profile{
     display: flex;
     position: relative;
 }
@@ -51,9 +51,9 @@
 
 .editProfileLink {
     position: absolute;
-    top: 10px; /* Adjust for vertical alignment */
-    right: 20px; /* Adjust for horizontal alignment */
-    z-index: 10; /* Ensure it appears above other elements */
+    top: 20px; 
+    right: 20px; 
+    z-index: 10; 
 }
 
 .editProfileButton {
@@ -70,4 +70,4 @@
 
 .editProfileButton:hover {
     background-color: #165dc7;
-}
+} 

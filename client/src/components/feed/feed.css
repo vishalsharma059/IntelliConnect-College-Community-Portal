@@ -1,7 +1,28 @@
-.feed{
+/* .feed{
     flex: 5.5;
 }
 
 .feedWrapper{
     padding: 20px;
+} */
+
+.feed {
+  flex: 6.5;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.feedWrapper {
+  width: 100%;
+  max-width: 820px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
+  .feedWrapper {
+    padding: 10px;
+  }
 }

@@ -1,4 +1,4 @@
-.post {
+/* .post {
   width: 100%;
   border-radius: 10px;
   -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
@@ -17,12 +17,12 @@
   justify-content: space-between;
 }
 
-/* Button container */
+
 .postTopRight {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  position: absolute; /* Position buttons on the top right */
+  position: absolute; 
   top: 10px;
   right: 10px;
 }
@@ -34,16 +34,16 @@
   border-radius: 8px;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
-  resize: vertical; /* Allow resizing vertically */
+  resize: vertical; 
   transition: all 0.3s ease;
-  outline: none; /* Remove default focus outline */
+  outline: none; 
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
 
 .postTextInput:focus {
   border-color: #007bff;
   background-color: #ffffff;
-  box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.5); /* Focus effect */
+  box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.5); 
 }
 
 .postTextInput::placeholder {
@@ -51,15 +51,14 @@
   font-style: italic;
 }
 
-/* Style for post text (default view when not editing) */
+
 .postText {
   font-size: 16px;
   line-height: 1.5;
   color: #333;
-  cursor: pointer; /* Indicate that it's clickable */
+  cursor: pointer; 
 }
 
-/* Additional styles for buttons */
 .updateButton,
 .deleteButton {
   padding: 6px 12px;
@@ -72,30 +71,6 @@
   transition: all 0.3s ease;
 }
 
-/* .updateButton {
-  background-color: green;
-  color: white;
-}
-
-.deleteButton {
-  background-color: red;
-  color: white;
-}
-
-.updateButton:hover {
-  background-color: #45a049;
-}
-
-.deleteButton:hover {
-  background-color: #e53935;
-}
-
-.updateButton:focus,
-.deleteButton:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-} */
-/* Update Button Style */
 .updateButton {
   color: black;
   background-color: transparent;
@@ -115,7 +90,7 @@
   transform: scale(1.05);
 }
 
-/* Delete Button Style */
+
 .deleteButton {
   color: black;
   background-color: transparent;
@@ -135,7 +110,6 @@
   transform: scale(1.05);
 }
 
-/* Focus State for Both Buttons */
 .updateButton:focus,
 .deleteButton:focus {
   outline: none;
@@ -215,3 +189,178 @@
 .successMessage.error {
   background-color: red;
 }
+ */
+
+
+
+
+
+.post {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  margin: 30px 0;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.postWrapper {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.postTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.postTopLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.postProfileImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.postUserName {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.postDate {
+  font-size: 12px;
+  color: gray;
+}
+
+.postTopRight {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.updateButton,
+.deleteButton {
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 13px;
+  margin-left: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.updateButton:hover,
+.deleteButton:hover {
+  background-color: #007bff;
+  color: white;
+  transform: scale(1.03);
+}
+
+.postCenter {
+  margin: 20px 0;
+}
+
+.postImage {
+  margin-top: 15px;
+  width: 100%;
+  max-height: 450px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+
+
+.postText {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  cursor: pointer;
+  white-space: pre-wrap;
+}
+
+.postTextInput {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fdfdfd;
+  resize: vertical;
+}
+
+.postBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.postBottomLeft {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.likeIcon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.likeIcon:hover {
+  transform: scale(1.1);
+}
+
+.postLikeCounter {
+  font-size: 14px;
+}
+
+.postCommentText {
+  cursor: pointer;
+  border-bottom: 1px dashed gray;
+  font-size: 14px;
+}
+
+.successMessage {
+  margin-top: 10px;
+  padding: 10px;
+  color: white;
+  background-color: green;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .postTop {
+    align-items: flex-start;
+  }
+
+  .postTopRight {
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .postText,
+  .postTextInput {
+    font-size: 14px;
+  }
+
+  .postImage {
+    max-height: 300px;
+  }
+}  

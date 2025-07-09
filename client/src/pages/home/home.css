@@ -1,4 +1,21 @@
-.homeContainer{
-    display: flex;
-    width: 100%;
+/* home.css */
+.homeContainer {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Hide sidebar & rightbar on small screens */
+@media screen and (max-width: 768px) {
+  .homeContainer {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  /* .rightbar {
+    display: none;
+  } */
 }
