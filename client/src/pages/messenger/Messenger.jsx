@@ -376,6 +376,7 @@
 
 import "./messenger.css";
 import Topbar from "../../components/topbar/Topbar";
+import Sidebar from "../../components/sidebar/Sidebar";
 import Conversation from "../../components/conversation/Conversation";
 import Message from "../../components/message/Message";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
@@ -514,6 +515,7 @@ export default function Messenger() {
     <>
       <Topbar />
       <div className="messenger">
+        <Sidebar />
         <div className="chatMenu">
           <div className="chatMenuWrapper">
             <input placeholder="Search for friends" className="chatMenuInput" />

@@ -6,21 +6,25 @@ import {
   Chat,
   PlayCircle,
   Group,
+  Home,
+  Logout,
   Bookmark,
   HelpOutline,
   WorkOutline,
   Event,
   School,
-  SmartToy
+  SmartToy,
 } from "@mui/icons-material";
 import CloseFriend from "../closeFriend/CloseFriend";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
   const [friends, setFriends] = useState([]);
   const { user } = useContext(AuthContext); // Get logged-in user from context
+  const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -36,26 +40,54 @@ export default function Sidebar() {
     fetchFriends();
   }, [user._id]);
 
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (!confirmLogout) return;
+    navigate("/");
+
+    setTimeout(() => {
+      dispatch({ type: "LOGOUT" });
+      localStorage.removeItem("user");
+      navigate("/login");
+    }, 100);
+  };
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
         <ul className="sidebarList">
+          <Link to="/" className="sidebarLink">
+            <li className="sidebarListItem">
+              <Home className="sidebarIcon" />
+              <span className="sidebarListItemText">Homepage</span>
+            </li>
+          </Link>
           <Link to={`/profile/${user.username}`} className="sidebarLink">
             <li className="sidebarListItem">
               <Group className="sidebarIcon" />
               <span className="sidebarListItemText">Friends</span>
             </li>
           </Link>
-          <Link to= "/messenger" className="sidebarLink">
+          <Link to="/messenger" className="sidebarLink">
             <li className="sidebarListItem">
               <Chat className="sidebarIcon" />
               <span className="sidebarListItemText">Chats</span>
             </li>
           </Link>
-          <Link to= "/ChatBot" className="sidebarLink">
+          <Link to="/ChatBot" className="sidebarLink">
             <li className="sidebarListItem">
               <SmartToy className="sidebarIcon" />
               <span className="sidebarListItemText">ChatBot</span>
+            </li>
+            <li
+              className="sidebarListItem"
+              onClick={() => {
+                handleLogout();
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              <Logout className="sidebarIcon" />
+              <span className="sidebarListItemText">Logout</span>
             </li>
           </Link>
           <li className="sidebarListItem">
@@ -66,14 +98,7 @@ export default function Sidebar() {
             <RssFeed className="sidebarIcon" />
             <span className="sidebarListItemText">Feed</span>
           </li>
-          <li className="sidebarListItem">
-            <Bookmark className="sidebarIcon" />
-            <span className="sidebarListItemText">Bookmarks</span>
-          </li>
-          <li className="sidebarListItem">
-            <HelpOutline className="sidebarIcon" />
-            <span className="sidebarListItemText">Questions</span>
-          </li>
+
           <li className="sidebarListItem">
             <WorkOutline className="sidebarIcon" />
             <span className="sidebarListItemText">Jobs</span>

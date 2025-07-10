@@ -15,27 +15,27 @@ export default function Topbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isSidebarVisible, setSidebarVisible] = useState(false);
   const searchRef = useRef();
   const navigate = useNavigate();
 
   // Toggle Sidebar visibility
   const handleToggleSidebar = () => {
-  const sidebar = document.querySelector(".sidebar");
-  if (sidebar) {
-    sidebar.classList.toggle("show");
-  }
-};
+    const sidebar = document.querySelector(".sidebar");
+    if (sidebar) {
+      sidebar.classList.toggle("show");
+    }
+  };
 
   const handleLogout = () => {
-    // First, go to home page
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (!confirmLogout) return;
     navigate("/");
-    // Then, after a short delay, log out and go to login
+
     setTimeout(() => {
       dispatch({ type: "LOGOUT" });
       localStorage.removeItem("user");
       navigate("/login");
-    }, 100); // 100ms delay to allow home page to render
+    }, 100);
   };
 
   const handleSearch = async (query) => {
@@ -126,7 +126,9 @@ export default function Topbar() {
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
-          <span className="topbarLink">Homepage</span>
+          <span className="topbarLink">
+            <Link className="homepage-link" to="/">Homepage</Link>
+          </span>
           <span className="topbarLink">
             <Link to="/ChatBot" className="chatbot-link">
               ChatBot

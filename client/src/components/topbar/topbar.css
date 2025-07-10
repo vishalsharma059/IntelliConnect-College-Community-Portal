@@ -28,7 +28,10 @@
   font-weight: bold;
   cursor: pointer;
   color: white;
+  transition: transform 0.2s ease-in-out;
 }
+
+
 
 .topbarCenter {
   flex: 2;
@@ -76,13 +79,12 @@
   cursor: pointer;
 }
 
-.topbarLinks{
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    justify-content: center;
+.topbarLinks {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
 }
-
 
 .topbarIcons {
   display: flex;
@@ -118,6 +120,10 @@
 }
 
 .chatbot-link {
+  text-decoration: none;
+  color: white;
+}
+.homepage-link {
   text-decoration: none;
   color: white;
 }
@@ -170,6 +176,14 @@
   color: gray;
   text-align: center;
   font-style: italic;
+}
+
+.hover-scale {
+  transition: transform 0.2s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.1);
 }
 
 /* Mobile view adjustments */

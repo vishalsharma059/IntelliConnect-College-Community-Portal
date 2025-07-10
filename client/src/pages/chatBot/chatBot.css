@@ -1,16 +1,16 @@
-   .chatbot-container {
+  /* .chatbot-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 60px); /* Adjust based on Topbar height */
+    height: calc(100vh - 60px); 
     background-color: #f0f2f5;
     padding: 20px;
   }
   
   .chat-container {
     width: 90%;
-    max-width: 800px; /* Increased width */
+    max-width: 800px; 
     height: 85vh;
     background: white;
     border-radius: 10px;
@@ -40,14 +40,14 @@
   .user-message {
     background-color: #007bff;
     color: white;
-    align-self: flex-end; /* User messages on the right */
+    align-self: flex-end; 
     border-bottom-right-radius: 5px;
   }
   
   .bot-message {
     background-color: #e4e6eb;
     color: black;
-    align-self: flex-start; /* Bot messages on the left */
+    align-self: flex-start; 
     border-bottom-left-radius: 5px;
   }
   
@@ -61,5 +61,59 @@
     color: #888;
     font-size: 14px;
     padding-left: 10px;
+  } */
+    
+
+ 
+.chatbot-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 60px); 
+  background-color: #f0f2f5;
+  padding: 20px;
+}
+
+.cs-main-container {
+  width: 100%;
+  max-width: 850px;
+  height: 90vh;
+  border-radius: 12px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.cs-message__content {
+  word-break: break-word;
+  white-space: pre-line; 
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.cs-message.cs-message--incoming .cs-message__content {
+  background-color: #e8eaf6;
+  color: #222;
+}
+
+.cs-message.cs-message--outgoing .cs-message__content {
+  background-color: #007bff;
+  color: white;
+}
+
+.cs-message-input__content-editor {
+  font-size: 15px;
+  line-height: 1.4;
+  padding: 10px 12px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .cs-main-container {
+    max-width: 100%;
+    height: 85vh;
   }
-  
+
+  .chatbot-container {
+    padding: 10px;
+  }
+} 
