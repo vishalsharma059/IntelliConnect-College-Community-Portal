@@ -5,6 +5,7 @@ import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import ConfirmModal from "../confirmModal/ConfirmModal";
 
 export default function Post({ post, refreshProfile }) {
   const [like, setLike] = useState(post.likes.length);
@@ -14,41 +15,13 @@ export default function Post({ post, refreshProfile }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newDesc, setNewDesc] = useState(post.desc);
   const [originalDesc, setOriginalDesc] = useState(post.desc);
+  const [confirmAction, setConfirmAction] = useState(null);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
 
-  // Toggle between view and edit mode
-  const handleTextClick = () => {
-    setIsEditing(true);
-  };
-
-  const handleUpdateClick = async () => {
-    const confirmUpdate = window.confirm(
-      "Are you sure you want to update this post?"
-    );
-    if (confirmUpdate) {
-      try {
-        const updatedPost = { ...post, desc: newDesc }; // Prepare updated post
-        await axios.put(
-          `${process.env.REACT_APP_API_URL}/api/posts/${post._id}`,
-          updatedPost,
-          { data: { userId: currentUser._id } }
-        );
-        setSuccessMessage("Post updated successfully");
-        setIsEditing(false);
-        setOriginalDesc(newDesc);
-        refreshProfile();
-      } catch (err) {
-        console.error("Error updating post:", err);
-        setSuccessMessage("Failed to update post");
-      }
-    }
-  };
-
   const handleBlur = () => {
-    // Revert to normal mode if no changes are made
     if (newDesc === originalDesc) {
-      setIsEditing(false); // Exit edit mode without saving
+      setIsEditing(false);
     }
   };
 
@@ -72,23 +45,54 @@ export default function Post({ post, refreshProfile }) {
 
   const likeHandler = () => {
     try {
-      axios.put(`${process.env.REACT_APP_API_URL}/api/posts/` + post._id + "/like", {
-        userId: currentUser._id,
-      });
+      axios.put(
+        `${process.env.REACT_APP_API_URL}/api/posts/` + post._id + "/like",
+        {
+          userId: currentUser._id,
+        }
+      );
     } catch (err) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
 
-  const deleteHandler = async () => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this post?"
-    );
-    if (confirmDelete) {
+  const handleTextClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleUpdateClick = () => {
+    setConfirmAction("update");
+  };
+
+  const handleDeleteClick = () => {
+    setConfirmAction("delete");
+  };
+
+  const handleConfirm = async () => {
+    if (confirmAction === "update") {
       try {
-        await axios.delete(`${process.env.REACT_APP_API_URL}/api/posts/${post._id}`, {
-          data: { userId: currentUser._id },
-        });
+        const updatedPost = { ...post, desc: newDesc }; // Prepare updated post
+        await axios.put(
+          `${process.env.REACT_APP_API_URL}/api/posts/${post._id}`,
+          updatedPost,
+          { data: { userId: currentUser._id } }
+        );
+        setSuccessMessage("Post updated successfully");
+        setIsEditing(false);
+        setOriginalDesc(newDesc);
+        refreshProfile();
+      } catch (err) {
+        console.error("Error updating post:", err);
+        setSuccessMessage("Failed to update post");
+      }
+    } else if (confirmAction === "delete") {
+      try {
+        await axios.delete(
+          `${process.env.REACT_APP_API_URL}/api/posts/${post._id}`,
+          {
+            data: { userId: currentUser._id },
+          }
+        );
         setSuccessMessage("Post deleted successfully");
         refreshProfile(); // Refresh profile after delete
       } catch (err) {
@@ -96,27 +100,11 @@ export default function Post({ post, refreshProfile }) {
         setSuccessMessage("Failed to delete post");
       }
     }
+    setConfirmAction(null);
   };
 
-  const updateHandler = async () => {
-    const confirmUpdate = window.confirm(
-      "Are you sure you want to update this post?"
-    );
-    if (confirmUpdate) {
-      try {
-        const updatedPost = { ...post, desc: newDesc }; // Example updated post data
-        await axios.put(
-          `${process.env.REACT_APP_API_URL}/api/posts/${post._id}`,
-          updatedPost,
-          { data: { userId: currentUser._id } }
-        );
-        setSuccessMessage("Post updated successfully");
-        refreshProfile(); // Refresh profile after update
-      } catch (err) {
-        console.error("Error updating post:", err);
-        setSuccessMessage("Failed to update post");
-      }
-    }
+  const handleCancel = () => {
+    setConfirmAction(null);
   };
 
   return (
@@ -146,7 +134,7 @@ export default function Post({ post, refreshProfile }) {
                 <button className="updateButton" onClick={handleUpdateClick}>
                   Update
                 </button>
-                <button className="deleteButton" onClick={deleteHandler}>
+                <button className="deleteButton" onClick={handleDeleteClick}>
                   Delete
                 </button>
               </div>
@@ -169,7 +157,7 @@ export default function Post({ post, refreshProfile }) {
               {post?.desc}
             </span>
           )}
-          {/* {post.img && <img className="postImage" src={PF + post.img} alt="" />} */}
+
           {post.img && (
             <img
               className="postImage"
@@ -199,11 +187,21 @@ export default function Post({ post, refreshProfile }) {
           </div>
         </div>
 
-        {/* Success Message Display */}
         {successMessage && (
           <div className="successMessage">{successMessage}</div>
         )}
       </div>
+      {confirmAction && (
+        <ConfirmModal
+          message={
+            confirmAction === "update"
+              ? "Are you sure you want to update this post?"
+              : "Are you sure you want to delete this post?"
+          }
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
     </div>
   );
 }

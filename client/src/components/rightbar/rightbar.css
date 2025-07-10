@@ -1,70 +1,67 @@
-.rightbar{
-    flex: 3.5;
+.rightbar {
+  flex: 3.5;
 }
 
-.rigthbarWrapper{
-    padding: 20px 20px 0 0;
+.rigthbarWrapper {
+  padding: 20px 20px 0 0;
 }
 
-.birthdayContainer{
-    display: flex;
-    align-items: center;
-    /* margin-bottom: 20px; */
+.birthdayContainer {
+  display: flex;
+  align-items: center;
 }
 
-.birthdayImage{
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
+.birthdayImage {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
 }
 
-.birthdayText{
-    font-weight: 300;
-    font-size: 15px;
-
+.birthdayText {
+  font-weight: 300;
+  font-size: 15px;
 }
 
-.rightbarAd{
-    width: 100%;
-    border-radius: 10px;
-    margin: 30px 0;
-    object-fit: cover;
+.rightbarAd {
+  width: 100%;
+  border-radius: 10px;
+  margin: 30px 0;
+  object-fit: cover;
 }
 
-.rightbarTitle{
-    margin-bottom: 20px;
+.rightbarTitle {
+  margin-bottom: 20px;
 }
 
-.rightbarFriendList{
-    padding: 0;
-    margin: 0;
-    list-style: none;
+.rightbarFriendList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
-.rightbarTitle{
-    font-size: 18px;
-    font-weight: 600;
-    margin: 20px 0 10px;
+.rightbarTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 20px 0 10px;
 }
 
-.rightbarInfo{
-    margin-bottom: 20px;
+.rightbarInfo {
+  margin-bottom: 20px;
 }
 
-.rightbarInfoItem{
-    margin-bottom: 10px;
+.rightbarInfoItem {
+  margin-bottom: 10px;
 }
 
-.rightbarInfoKey{
-    font-weight: 500;
-    margin: 15px;
-    color: #555;
+.rightbarInfoKey {
+  font-weight: 500;
+  margin: 15px;
+  color: #555;
 }
 
-.rightbarValue{
-    font-weight: 300;
-    color: #666;
-
+.rightbarValue {
+  font-weight: 300;
+  color: #666;
 }
 
 .rightbarFollowings {
@@ -72,13 +69,6 @@
   grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   gap: 15px;
 }
-
-/* .rightbarFollowing{
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    cursor: pointer;
-} */
 
 .rightbarFollowing {
   display: flex;
@@ -123,21 +113,17 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
- 
+
 .rightbarFollowButton:hover {
   background-color: #155ac3;
 }
 
-/* .homeRightbar {
-  display: none;
-} */
-
-@media screen and (max: 768px)  {
+@media screen and (max: 768px) {
   .homeRightbar {
     display: block;
   }
 
-    .rightbar {
+  .rightbar {
     flex: 1;
     width: 100%;
     padding: 10px;

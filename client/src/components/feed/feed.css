@@ -1,11 +1,3 @@
-/* .feed{
-    flex: 5.5;
-}
-
-.feedWrapper{
-    padding: 20px;
-} */
-
 .feed {
   flex: 6.5;
   display: flex;

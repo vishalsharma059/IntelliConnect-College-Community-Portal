@@ -1,5 +1,6 @@
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@mui/icons-material";
+import ConfirmModal from "../confirmModal/ConfirmModal";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import { useContext } from "react";
@@ -15,6 +16,7 @@ export default function Topbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const searchRef = useRef();
   const navigate = useNavigate();
 
@@ -27,10 +29,10 @@ export default function Topbar() {
   };
 
   const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to logout?");
-    if (!confirmLogout) return;
-    navigate("/");
+    setShowConfirm(true);
+  };
 
+  const confirmLogout = () => {
     setTimeout(() => {
       dispatch({ type: "LOGOUT" });
       localStorage.removeItem("user");
@@ -127,7 +129,9 @@ export default function Topbar() {
       <div className="topbarRight">
         <div className="topbarLinks">
           <span className="topbarLink">
-            <Link className="homepage-link" to="/">Homepage</Link>
+            <Link className="homepage-link" to="/">
+              Homepage
+            </Link>
           </span>
           <span className="topbarLink">
             <Link to="/ChatBot" className="chatbot-link">
@@ -187,6 +191,13 @@ export default function Topbar() {
           </Link>
         )}
       </div>
+      {showConfirm && (
+        <ConfirmModal
+          message="Are you sure you want to logout?"
+          onConfirm={confirmLogout}
+          onCancel={() => setShowConfirm(false)}
+        />
+      )}
     </div>
   );
 }

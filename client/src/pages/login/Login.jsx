@@ -1,4 +1,4 @@
-import "./login.css"
+import "./login.css";
 import { useContext, useRef, useState } from "react";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
@@ -10,7 +10,7 @@ export default function Login() {
   const password = useRef();
   const { user, isFetching, error, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [loadingButton, setLoadingButton] = useState(""); // "login" or "register"
+  const [loadingButton, setLoadingButton] = useState("");
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -30,16 +30,36 @@ export default function Login() {
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">IntelliConnect</h3>
+          <h3 className="loginLogo">
+            <img
+              className="logoImage"
+              src="/assets/artificial-intelligence.png"
+              alt="Logo"
+            />
+            IntelliConnect
+          </h3>
           <span className="loginDesc">
             Smart Campus, Bright mind: Your Gateway Endless Opportunities.
           </span>
         </div>
         <div className="loginRight">
           <form className="loginBox" onSubmit={handleClick}>
-            <input placeholder="Email" required type="email" className="loginInput" ref={email}/>
-            <input placeholder="Password" required minLength="6" type="password" className="loginInput" ref={password} />
-            
+            <input
+              placeholder="Email"
+              required
+              type="email"
+              className="loginInput"
+              ref={email}
+            />
+            <input
+              placeholder="Password"
+              required
+              minLength="6"
+              type="password"
+              className="loginInput"
+              ref={password}
+            />
+
             <button
               className="loginButton"
               type="submit"
@@ -53,7 +73,7 @@ export default function Login() {
             </button>
 
             {error && <span className="errorMessage">{error}</span>}
-            
+
             <span className="loginForgot">Forgot Password?</span>
 
             <button
@@ -68,7 +88,7 @@ export default function Login() {
                 "Create a New Account"
               )}
             </button>
-         </form>
+          </form>
         </div>
       </div>
     </div>

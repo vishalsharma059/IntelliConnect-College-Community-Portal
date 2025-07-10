@@ -31,8 +31,6 @@
   transition: transform 0.2s ease-in-out;
 }
 
-
-
 .topbarCenter {
   flex: 2;
   justify-content: center;
@@ -196,10 +194,6 @@
   .topbarLeft {
     flex: 0;
   }
-
-  /* .topbarCenter {
-    display: none;
-  } */
 
   .topbarRight {
     flex: 0;

@@ -1,107 +1,7 @@
-// import { useState } from 'react';
-// import Topbar from "../../components/topbar/Topbar";
-// import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
-// import {
-//   MainContainer,
-//   ChatContainer,
-//   MessageList,
-//   Message,
-//   MessageInput,
-//   TypingIndicator
-// } from '@chatscope/chat-ui-kit-react';
-// import "./chatBot.css";
-
-// const API_KEY = "AIzaSyBJLcgAx09GOjuL6_AIOP5BAyIu7hni-AI";
-
-// export default function ChatBot() {
-//   const [messages, setMessages] = useState([
-//     {
-//       message: "Hello, I'm IntelliConnect! Ask me anything!",
-//       sender: "Gemini"
-//     }
-//   ]);
-//   const [isTyping, setIsTyping] = useState(false);
-
-
-
-//   const handleSend = async (message) => {
-//     const newMessage = {
-//       message,
-//       sender: "user"
-//     };
-
-//     setMessages([...messages, newMessage]);
-//     setIsTyping(true);
-//     await processMessageToGemini(message);
-//   };
-
-//   async function processMessageToGemini(message) {
-//     const apiRequestBody = {
-//       contents: [{ parts: [{ text: message }] }]
-//     };
-
-//     try {
-//       const response = await fetch(
-//         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
-//         {
-//           method: "POST",
-//           headers: { "Content-Type": "application/json" },
-//           body: JSON.stringify(apiRequestBody)
-//         }
-//       );
-
-//       const data = await response.json();
-
-//       const botResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't process that.";
-
-//        botResponse = botResponse.replace(/\*\*(.*?)\*\*/g, '$1').replace(/`(.*?)`/g, '$1');
-
-//       setMessages(prevMessages => [...prevMessages, {
-//         message: botResponse,
-//         sender: "Gemini"
-//       }]);
-
-//       setIsTyping(false);
-//     } catch (error) {
-//       console.error("Error:", error);
-//       setIsTyping(false);
-//     }
-//   }
-
-//   return (
-//     <>
-//       <Topbar />
-//       <div className="chatbot-container">
-//         <MainContainer>
-//           <ChatContainer>
-//             <MessageList
-//               scrollBehavior="smooth"
-//               typingIndicator={isTyping ? <TypingIndicator content="IntelliConnect is typing..." /> : null}
-//             >
-//               {messages.map((msg, i) => (
-//                 <Message
-//                   key={i}
-//                   model={{
-//                     message: msg.message,
-//                     direction: msg.sender === "user" ? "outgoing" : "incoming"
-//                   }}
-//                 />
-//               ))}
-//             </MessageList>
-//             <MessageInput placeholder="Type a message..." onSend={handleSend} />
-//           </ChatContainer>
-//         </MainContainer>
-//       </div>
-//     </>
-//   );
-// }
-
-
-
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 import Topbar from "../../components/topbar/Topbar";
-import Sidebar from '../../components/sidebar/Sidebar';
-import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
+import Sidebar from "../../components/sidebar/Sidebar";
+import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
 import {
   MainContainer,
@@ -109,8 +9,8 @@ import {
   MessageList,
   Message,
   MessageInput,
-  TypingIndicator
-} from '@chatscope/chat-ui-kit-react';
+  TypingIndicator,
+} from "@chatscope/chat-ui-kit-react";
 
 import "./chatBot.css";
 
@@ -120,8 +20,8 @@ export default function ChatBot() {
   const [messages, setMessages] = useState([
     {
       message: "Hello, I'm IntelliConnect! Ask me anything!",
-      sender: "Gemini"
-    }
+      sender: "Gemini",
+    },
   ]);
   const [isTyping, setIsTyping] = useState(false);
 
@@ -142,17 +42,17 @@ export default function ChatBot() {
 
     const newMessage = {
       message,
-      sender: "user"
+      sender: "user",
     };
 
-    setMessages(prev => [...prev, newMessage]);
+    setMessages((prev) => [...prev, newMessage]);
     setIsTyping(true);
     await processMessageToGemini(message);
   };
 
   async function processMessageToGemini(message) {
     const apiRequestBody = {
-      contents: [{ parts: [{ text: message }] }]
+      contents: [{ parts: [{ text: message }] }],
     };
 
     try {
@@ -161,29 +61,39 @@ export default function ChatBot() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(apiRequestBody)
+          body: JSON.stringify(apiRequestBody),
         }
       );
 
       const data = await response.json();
 
-      let botResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't process that.";
+      let botResponse =
+        data.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "I'm sorry, I couldn't process that.";
 
       // Remove markdown artifacts like **bold** and `code`
-      botResponse = botResponse.replace(/\*\*(.*?)\*\*/g, '$1').replace(/`(.*?)`/g, '$1');
+      botResponse = botResponse
+        .replace(/\*\*(.*?)\*\*/g, "$1")
+        .replace(/`(.*?)`/g, "$1");
 
-      setMessages(prev => [...prev, {
-        message: botResponse,
-        sender: "Gemini"
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          message: botResponse,
+          sender: "Gemini",
+        },
+      ]);
 
       setIsTyping(false);
     } catch (error) {
       console.error("Error:", error);
-      setMessages(prev => [...prev, {
-        message: "Oops! Something went wrong.",
-        sender: "Gemini"
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          message: "Oops! Something went wrong.",
+          sender: "Gemini",
+        },
+      ]);
       setIsTyping(false);
     }
   }
@@ -198,7 +108,11 @@ export default function ChatBot() {
             <MessageList
               ref={messageListRef}
               scrollBehavior="smooth"
-              typingIndicator={isTyping ? <TypingIndicator content="IntelliConnect is typing..." /> : null}
+              typingIndicator={
+                isTyping ? (
+                  <TypingIndicator content="IntelliConnect is typing..." />
+                ) : null
+              }
             >
               {messages.map((msg, i) => (
                 <Message
@@ -206,12 +120,16 @@ export default function ChatBot() {
                   model={{
                     message: msg.message,
                     direction: msg.sender === "user" ? "outgoing" : "incoming",
-                    sender: msg.sender
+                    sender: msg.sender,
                   }}
                 />
               ))}
             </MessageList>
-            <MessageInput placeholder="Type a message..." onSend={handleSend} attachButton={false} />
+            <MessageInput
+              placeholder="Type a message..."
+              onSend={handleSend}
+              attachButton={false}
+            />
           </ChatContainer>
         </MainContainer>
       </div>

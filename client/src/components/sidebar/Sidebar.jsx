@@ -1,5 +1,6 @@
 import "./sidebar.css";
 import { useEffect, useState } from "react";
+import ConfirmModal from "../confirmModal/ConfirmModal";
 import axios from "axios";
 import {
   RssFeed,
@@ -8,8 +9,6 @@ import {
   Group,
   Home,
   Logout,
-  Bookmark,
-  HelpOutline,
   WorkOutline,
   Event,
   School,
@@ -22,6 +21,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
   const [friends, setFriends] = useState([]);
+  const [showConfirm, setShowConfirm] = useState(false);
   const { user } = useContext(AuthContext); // Get logged-in user from context
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -41,10 +41,10 @@ export default function Sidebar() {
   }, [user._id]);
 
   const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to logout?");
-    if (!confirmLogout) return;
-    navigate("/");
+    setShowConfirm(true);
+  };
 
+  const confirmLogout = () => {
     setTimeout(() => {
       dispatch({ type: "LOGOUT" });
       localStorage.removeItem("user");
@@ -79,17 +79,24 @@ export default function Sidebar() {
               <SmartToy className="sidebarIcon" />
               <span className="sidebarListItemText">ChatBot</span>
             </li>
-            <li
-              className="sidebarListItem"
-              onClick={() => {
-                handleLogout();
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              <Logout className="sidebarIcon" />
-              <span className="sidebarListItemText">Logout</span>
-            </li>
           </Link>
+          {showConfirm && (
+            <ConfirmModal
+              message="Are you sure you want to logout?"
+              onConfirm={confirmLogout}
+              onCancel={() => setShowConfirm(false)}
+            />
+          )}
+          <li
+            className="sidebarListItem"
+            onClick={() => {
+              handleLogout();
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <Logout className="sidebarIcon" />
+            <span className="sidebarListItemText">Logout</span>
+          </li>
           <li className="sidebarListItem">
             <PlayCircle className="sidebarIcon" />
             <span className="sidebarListItemText">Videos</span>
