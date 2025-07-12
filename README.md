@@ -1,4 +1,4 @@
-🙋‍♂️ About Me
+# 🙋‍♂️ About Me
 Hi! I’m Vishal Sharma, a full-stack MERN developer passionate about building real-world platforms with strong UI/UX and secure backend architecture.
 
 🛠️ Skilled in React, Node.js, MongoDB, Tailwind CSS, and AWS.
