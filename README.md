@@ -1,11 +1,11 @@
 # 🙋‍♂️ About Me
 Hi! I’m Vishal Sharma, a full-stack MERN developer passionate about building real-world platforms with strong UI/UX and secure backend architecture.
+I'd like to share the my IntelliConnect project that I've developed.
 
-🛠️ Skilled in React, Node.js, MongoDB, Tailwind CSS, and AWS.
+If you use this project or get inspired by it, ⭐ please consider giving it a star on GitHub! or a simple mention – it truly helps and is appreciated! 🙏
 
-💬 Feel free to connect: LinkedIn
+💬 Feel free to connect: [LinkedIn](https://www.linkedin.com/in/vishalsharma02731)
 
-If you use this project or get inspired by it, please consider giving proper credit or a simple mention – it truly helps and is appreciated! 🙏
 
 # 🌐 IntelliConnect – College Community Portal
 
