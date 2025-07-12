@@ -170,6 +170,13 @@
   object-fit: cover;
 }
 
+.searchResultItem.loading {
+  text-align: center;
+  font-style: italic;
+  color: #555;
+  padding: 10px;
+}
+
 .noResult {
   color: gray;
   text-align: center;

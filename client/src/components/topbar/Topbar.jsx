@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { useDebounce } from "../../customHooks/useDebounce";
 import axios from "axios";
 
 export default function Topbar() {
@@ -17,6 +18,7 @@ export default function Topbar() {
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const searchRef = useRef();
   const navigate = useNavigate();
 
@@ -39,6 +41,18 @@ export default function Topbar() {
       navigate("/login");
     }, 100);
   };
+
+  const debouncedSearchTerm = useDebounce(searchQuery, 300);
+
+  useEffect(() => {
+    if (debouncedSearchTerm.trim()) {
+      setIsLoading(true);
+      handleSearch(debouncedSearchTerm).finally(() => setIsLoading(false));
+    } else {
+      setSearchResults([]);
+      setShowDropdown(false);
+    }
+  }, [debouncedSearchTerm]);
 
   const handleSearch = async (query) => {
     try {
@@ -86,15 +100,12 @@ export default function Topbar() {
             className="searchInput"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && searchQuery.trim()) {
-                handleSearch(searchQuery);
-              }
-            }}
           />
           {showDropdown && (
             <ul className="searchDropdown">
-              {searchResults.length > 0 ? (
+              {isLoading ? (
+                <li className="searchResultItem loading">Loading...</li>
+              ) : searchResults.length > 0 ? (
                 searchResults.map((user) => (
                   <li
                     key={user._id}
