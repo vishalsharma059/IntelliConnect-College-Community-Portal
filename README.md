@@ -4,7 +4,8 @@ I'd like to share the my IntelliConnect project that I've developed.
 
 If you use this project or get inspired by it, ⭐ please consider giving it a star on GitHub! or a simple mention – it truly helps and is appreciated! 🙏
 
-💬 Feel free to connect: [LinkedIn](https://www.linkedin.com/in/vishalsharma2003)
+💬 Feel free to connect: [![LinkedIn](https://img.shields.io/badge/-Connect%20on%20LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/vishalsharma2003)
+
 
 
 # 🌐 IntelliConnect – College Community Portal
